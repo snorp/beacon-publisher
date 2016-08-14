@@ -1,0 +1,15 @@
+{
+  "name": "beacon-publisher",
+  "version": "1.0.0",
+  "description": "Watches for BLE beacons and publishes events to MQTT",
+  "main": "publisher.js",
+  "author": "James Willcox <snorp@snorp.net>",
+  "license": "ISC",
+  "bin": {
+    "beacon-publisher": "publisher.js"
+  },
+  "dependencies": {
+    "mqtt": "^1.13.0",
+    "noble": "^1.6.0"
+  }
+}
