@@ -24,6 +24,7 @@ function parseBeacon(p) {
   }
 
   return {
+    name: p.advertisement.localName || '',
     uuid: data.slice(4, 19).toString('hex'),
     major: data.readUInt16BE(20),
     minor: data.readUInt16BE(22),
@@ -62,3 +63,4 @@ noble.on('discover', function(p) {
   console.log('Publishing event for beacon: ', beacon);
   client.publish('beacon/observed', JSON.stringify(beacon));
 });
+
