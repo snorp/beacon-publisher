@@ -12,16 +12,18 @@ Install from GitHub with `npm install -g snorp/beacon-publisher`
 
 The MQTT message is JSON-formatted, and looks like this:
 
-`{
-  name: 'MyBeacon',
-  uuid: '2f234454cf6d4a0fadf2f4911ba9ff',
-  major: 1,
-  minor: 1,
-  rssi: -72,
-  observer: 'unknown'
-}`
+```
+{
+  "name": "MyBeacon",
+  "uuid": "2f234454cf6d4a0fadf2f4911ba9ff",
+  "major": 1,
+  "minor": 1,
+  "rssi": -72,
+  "observer": "unknown"
+}
+```
 
-If the `name` option is specified, the `observer` field will be set to that. This is useful if you have multiple observers and care about which one of them saw the advertisement.
+If the `name` option is specified, the `observer` field will be set to that ("unknown" otherwise). This is useful if you have multiple observers and care about which one of them saw the advertisement.
 
 ### Run at startup
 
