@@ -9,6 +9,7 @@
     "beacon-publisher": "publisher.js"
   },
   "dependencies": {
+    "minimist": "^1.2.0",
     "mqtt": "^1.13.0",
     "noble": "^1.6.0"
   }

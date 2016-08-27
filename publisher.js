@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 
+'use strict'
+
 var noble = require('noble');
 var mqtt = require('mqtt');
-
+var minimist = require('minimist');
 
 function parseBeacon(p) {
   var data = p.advertisement.manufacturerData;
@@ -19,7 +21,7 @@ function parseBeacon(p) {
     return null;
   }
 
-  if (data[3] !== 0x15) {
+  if (data[3] !== 21) {
     return null;
   }
 
@@ -32,11 +34,15 @@ function parseBeacon(p) {
   }
 }
 
-var url = process.argv[2];
+var argv = require('minimist')(process.argv.slice(2));
+
+var url = argv.u || argv.url;
 if (!url) {
   console.error('Must pass MQTT endpoint as argument');
   process.exit(1);
 }
+
+var observerName = argv.n || argv.name || 'unknown';
 
 var client = mqtt.connect(url);
 client.on('connect', function() {
@@ -55,10 +61,11 @@ noble.on('stateChange', function(state) {
 noble.on('discover', function(p) {
   var beacon = parseBeacon(p);
   if (!beacon) {
-    console.log('Ignoring non-beacon advertisement from ' + p.id);
+    console.log('Ignoring non-beacon advertisement from ' + (p.advertisement.localName || p.id));
     return;
   }
 
+  beacon.observer = observerName;
 
   console.log('Publishing event for beacon: ', beacon);
   client.publish('beacon/observed', JSON.stringify(beacon));
